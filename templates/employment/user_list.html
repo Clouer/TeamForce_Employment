@@ -1,0 +1,54 @@
+{% extends 'employment/base.html' %}
+{% block title %} TeamForce | Employment {% endblock %}
+{% block container %}
+
+
+    <h1 class="h1 text-center mx-auto mt-4 py-5"><strong>Подбор сотрудников <br>TeamForce</strong></h1>
+    {% if request.user.is_active %}
+        <h2 class="h5 text-center mb-5">Список сотрудников</h2>
+
+        {% for user in user_list %}
+            <!-- Block started -->
+            <div class="card mb-4" style="max-width: 50%; margin: 0 auto;">
+                <div class="card-body">
+                    <div class="card ">
+                        <div class="card-header">
+                            <div class="form-label">
+                                {{ user.last_name }} {{ user.first_name }}
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+
+                            <h5 class="mb-3">Навыки</h5>
+                            <ol class="list-group list-group-numbered">
+                                {% for skill in user.skills.all %}
+                                    <li class="list-group-item">{{ skill.name }}</li>
+                                {% endfor %}
+                            </ol>
+
+                            <h5 class="my-3">Владение языками:</h5>
+                            <ol class="list-group list-group-numbered">
+                                <li class="list-group-item">{{ user.languages }}</li>
+                            </ol>
+
+                            <h5 class="my-3">Увлечения:</h5>
+                            <ol class="list-group list-group-numbered">
+                                <li class="list-group-item">{{ user.hobbies }}</li>
+                            </ol>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Block Finished -->
+        {% endfor %}
+
+    {% else %}
+        <h2 class="h5 text-center my-3">Чтобы пользоваться системой, необходимо <a href="{% url 'login' %}">войти</a> в
+            систему.</h2>
+        <h2 class="h6 mt-2 text-center">Нет аккаунта? <a href="{% url 'register' %}">Зарегистрируйтесь!</a></h2>
+    {% endif %}
+
+{% endblock %}
